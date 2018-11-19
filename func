@@ -1,11 +1,14 @@
  func foodUnits(carb: Double, currentBG: Double, previousUnit: Double, hourSince: Double) -> Double {
         
+        //Gets the time
         let date = Date()
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: date)
         
+        
         var ratio: Int
         
+        //Uses the hour to determine which ratio to use
         if hour < 2 {
             ratio = midnightRatio
         } else if hour < 6 {
@@ -25,15 +28,15 @@
         }
         
         
+        //Calculating how many units required to correct for the food being eaten
+        let foodUnits = carb / Double(ratio) 
         
-        let foodUnits = carb / Double(ratio)
-        print(ratio)
+        //Calculating how many units required to correct for blood sugar
         let correctionUnits = ((currentBG - Double(targetBG)) / Double(isf)) - (previousUnit - (previousUnit * (hourSince / insulinDuration)))
-        print(foodUnits)
-        print(correctionUnits)
         
         var totalUnits: Double
         totalUnits = foodUnits + correctionUnits
+        //Displaying totalUnits correctly
         totalUnits = (round(totalUnits * 10)) / 10
         
         return totalUnits
