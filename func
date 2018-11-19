@@ -1,0 +1,40 @@
+ func foodUnits(carb: Double, currentBG: Double, previousUnit: Double, hourSince: Double) -> Double {
+        
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        
+        var ratio: Int
+        
+        if hour < 2 {
+            ratio = midnightRatio
+        } else if hour < 6 {
+            ratio = twoAM
+        } else if hour < 9 {
+            ratio = sixAM
+        } else if hour < 11 {
+            ratio = nineAM
+        } else if hour < 14 {
+            ratio = elevenAM
+        } else if hour < 18 {
+            ratio = twoPM
+        } else if hour < 22 {
+            ratio = sixPM
+        } else {
+            ratio = tenPM
+        }
+        
+        
+        
+        let foodUnits = carb / Double(ratio)
+        print(ratio)
+        let correctionUnits = ((currentBG - Double(targetBG)) / Double(isf)) - (previousUnit - (previousUnit * (hourSince / insulinDuration)))
+        print(foodUnits)
+        print(correctionUnits)
+        
+        var totalUnits: Double
+        totalUnits = foodUnits + correctionUnits
+        totalUnits = (round(totalUnits * 10)) / 10
+        
+        return totalUnits
+    }
